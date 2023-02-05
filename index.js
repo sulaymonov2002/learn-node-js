@@ -31,4 +31,30 @@ app.get("/api/categories:id", (req, res) => {
   const category = categories.find((c) => c.id === parseInt(req.params.id));
   if (!category)
     return res.status(404).send("Berilgan IDga teng bo'lgan toifa topilmadi");
+
+  res.send(category);
+});
+
+app.put("/api/categories:id", (req, res) => {
+  const category = categories.find((c) => c.id === parseInt(req.params.id));
+  if (!category)
+    return res.status(404).send("Berilgan IDga teng bo'lgan toifa topilmadi");
+
+  const { error } = validateCategory(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  category.name = req.body.name;
+  res.send(category);
+});
+
+app.delete("/api/categories/:id", (req, res) => {
+  const category = categories.find((c) => c.id === parseInt(req.params.id));
+  if (!category)
+    return res.status(404).send("Berilgan IDga teng bo'lgan toifa topilmadi");
+
+  const categoryIndex = categories.indexOf(category);
+  categories.splice(categoryIndex, 1);
+  res.send(category);
 });
