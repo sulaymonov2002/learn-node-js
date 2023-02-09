@@ -58,3 +58,16 @@ app.delete("/api/categories/:id", (req, res) => {
   categories.splice(categoryIndex, 1);
   res.send(category);
 });
+
+function validateCategory(category) {
+  const schema = {
+    name: Joi.string().required().min(3),
+  };
+  return Joi.validate(category, schema);
+}
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`${port}chi portni eshitishni boshladim...`);
+});
