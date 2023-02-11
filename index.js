@@ -1,17 +1,13 @@
 const express = require("express");
 const Joi = require("joi");
 const app = express();
+const logger = require("./logger");
+const authentication = require('./auth')
 app.use(express.json());
 
-app.use(function (req, res, next) {
-  console.log("log yozish...");
-  next();
-});
+app.use(logger);
 
-app.use(function (req, res, next) {
-  console.log("Authentifikatsiya qilish...");
-  next();
-});
+app.use(authentication);
 
 const books = [
   { id: 1, name: "rich dad poor dad" },
