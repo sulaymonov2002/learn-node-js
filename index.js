@@ -2,6 +2,8 @@ const express = require("express");
 const Joi = require("joi");
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded()); //key1=value1&key2=value2
+app.use(express.static("public")); //key1=value1&key2=value2
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 const helmet = require("helmet");
@@ -10,10 +12,10 @@ const morgan = require("morgan");
 const logger = require("./logger");
 const authentication = require("./auth");
 
-app.use(logger);
+// app.use(logger);
 app.use(authentication);
 app.use(helmet);
-app.use(morgan);
+app.use(morgan("tiny"));
 
 const books = [
   { id: 1, name: "rich dad poor dad" },
